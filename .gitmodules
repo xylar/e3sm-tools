@@ -1,3 +1,6 @@
 [submodule "E3SM"]
 	path = submodules/E3SM
 	url = git@github.com:E3SM-Project/E3SM.git
+[submodule "cime"]
+	path = submodules/cime
+	url = git@github.com:ESMCI/cime.git
