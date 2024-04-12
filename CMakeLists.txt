@@ -19,6 +19,7 @@ message(STATUS "netcdf_c_libs=${netcdf_c_libs}")
 message(STATUS "netcdf_f_incdir=${netcdf_f_incdir}")
 message(STATUS "netcdf_f_libs=${netcdf_f_libs}")
 
+add_subdirectory(${CMAKE_SOURCE_DIR}/tools/cube_to_target cube_to_target)
 add_subdirectory(${CMAKE_SOURCE_DIR}/tools/gen_domain gen_domain)
 add_subdirectory(${CMAKE_SOURCE_DIR}/tools/interpinic interpinic)
 add_subdirectory(${CMAKE_SOURCE_DIR}/tools/squadgen squadgen)
