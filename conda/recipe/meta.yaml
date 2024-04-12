@@ -1,0 +1,50 @@
+{% set name = "e3sm-tools" %}
+{% set version = "3.0.0rc1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  path: ../..
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
+    - cmake
+  host:
+    - hdf5
+    - hdf5 * nompi_*
+    - libcurl
+    - libnetcdf
+    - libnetcdf * nompi_*
+    - libpng
+    - netcdf-fortran
+    - netcdf-fortran * nompi_*
+
+test:
+  source_files:
+    - tools/gen_domain/test_gen_domain.sh
+  commands:
+    - test -f "${PREFIX}/bin/cube_to_target"
+    - test -f "${PREFIX}/bin/gen_domain"
+    - test -f "${PREFIX}/bin/interpinic"
+    - test -f "${PREFIX}/bin/mksurfdata_map"
+    - test -f "${PREFIX}/bin/squadgen"
+
+about:
+  home: https://github.com/xylar/e3sm-tools
+  license: BSD-3-Clause
+  license_family: BSD
+  license_file: LICENSE
+  summary: Tools needed to integrate new meshes into the Energy Exascale Earth System Model
+  doc_url: https://github.com/xylar/e3sm-tools
+  dev_url: https://github.com/xylar/e3sm-tools
+
+extra:
+  recipe-maintainers:
+    - xylar
