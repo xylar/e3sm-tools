@@ -4,3 +4,6 @@
 [submodule "cime"]
 	path = submodules/cime
 	url = git@github.com:ESMCI/cime.git
+[submodule "squadgen"]
+	path = submodules/squadgen
+	url = git@github.com:ClimateGlobalChange/squadgen.git
