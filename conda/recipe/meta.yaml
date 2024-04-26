@@ -1,5 +1,5 @@
 {% set name = "e3sm-tools" %}
-{% set version = "3.0.0rc1" %}
+{% set version = "3.0.0rc2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,6 +7,10 @@ package:
 
 source:
   path: ../..
+  patches:
+    - 0001-fix-boz-erros-in-interpinic-build.patch
+    - 0002-fix-iargc-issue-in-interpinic-build.patch
+    - 0003-fix-boz-erros-in-mksurfdata_map-build.patch
 
 build:
   number: 0
@@ -27,11 +31,19 @@ requirements:
     - netcdf-fortran * nompi_*
 
 test:
-  source_files:
-    - tools/gen_domain/test_gen_domain.sh
+  requires:
+    - curl
+    - nccmp
   commands:
+    - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/cpl/gridmaps/IcoswISC30E3r5/map_IcoswISC30E3r5_to_r05_traave.20231121.nc
+    - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/share/domains/domain.ocn.IcoswISC30E3r5.231121.nc
+    - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/share/domains/domain.lnd.r05_IcoswISC30E3r5.231121.nc
+    - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/share/domains/domain.ocn.r05_IcoswISC30E3r5.231121.nc
+    - gen_domain -o IcoswISC30E3r5 -l r05 -m map_IcoswISC30E3r5_to_r05_traave.20231121.nc
+    - nccmp -d --Tolerance=1e-5 domain.ocn.IcoswISC30E3r5.*.nc
+    - nccmp -d --Tolerance=1e-5 domain.lnd.r05_IcoswISC30E3r5.*.nc
+    - nccmp -d --Tolerance=1e-5 domain.ocn.r05_IcoswISC30E3r5.*.nc
     - test -f "${PREFIX}/bin/cube_to_target"
-    - test -f "${PREFIX}/bin/gen_domain"
     - test -f "${PREFIX}/bin/interpinic"
     - test -f "${PREFIX}/bin/mksurfdata_map"
     - test -f "${PREFIX}/bin/squadgen"
