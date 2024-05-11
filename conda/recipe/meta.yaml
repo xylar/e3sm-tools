@@ -1,16 +1,31 @@
 {% set name = "e3sm-tools" %}
 {% set version = "3.0.0" %}
+{% set e3sm_version = "3.0.0" %}
+{% set cime_version = "cime6.0.234" %}
+{% set squadgen_hash = "e39223e31a7b57adc1e5b946bd11dcfbaf52e76e" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  path: ../..
-  patches:
-    - 0001-fix-boz-erros-in-interpinic-build.patch
-    - 0002-fix-iargc-issue-in-interpinic-build.patch
-    - 0003-fix-boz-erros-in-mksurfdata_map-build.patch
+  - path: ../..
+
+  - url: https://github.com/E3SM-Project/E3SM/archive/refs/tags/v{{ e3sm_version }}.tar.gz
+    sha256: 5fae4c5c5e30099fae7500cf32cd77998e51bcda20ac4f170b3ad59dc44bb25c
+    folder: submodules/E3SM
+    patches:
+      - 0001-fix-boz-erros-in-interpinic-build.patch
+      - 0002-fix-iargc-issue-in-interpinic-build.patch
+      - 0003-fix-boz-erros-in-mksurfdata_map-build.patch
+
+  - url: https://github.com/ESMCI/cime/archive/refs/tags/{{ cime_version }}.tar.gz
+    sha256: 9596339ac0dcec4d2b2817d526ea8eabc27bdfcd6903bd58a14add21f2f1afcd
+    folder: submodules/cime
+
+  - url: https://github.com/ClimateGlobalChange/squadgen/archive/{{ squadgen_hash }}.tar.gz
+    sha256: 5c983255222534848916213776c6569415edac140232f2833f11529d029af6d5
+    folder: submodules/squadgen
 
 build:
   number: 0
