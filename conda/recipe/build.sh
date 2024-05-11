@@ -13,3 +13,6 @@ cmake \
   ..
 cmake --build .
 cmake --install .
+
+# install cdscan_replacement
+cp ${SRC_DIR}/tools/cdscan_replacement/cdscan_replacement ${PREFIX}/bin

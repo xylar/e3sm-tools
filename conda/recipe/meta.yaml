@@ -29,12 +29,16 @@ requirements:
     - libpng
     - netcdf-fortran
     - netcdf-fortran * nompi_*
+  run:
+    - python >=3.8
+    - pandas
 
 test:
   requires:
     - curl
     - nccmp
   commands:
+    - cdscan_replacement --help
     - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/cpl/gridmaps/IcoswISC30E3r5/map_IcoswISC30E3r5_to_ne30pg2_traave.20231121.nc
     - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/share/domains/domain.ocn.IcoswISC30E3r5.231121.nc
     - curl -O https://web.lcrc.anl.gov/public/e3sm/inputdata/share/domains/domain.lnd.ne30pg2_IcoswISC30E3r5.231121.nc
